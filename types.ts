@@ -1,3 +1,5 @@
+import React from 'react';
+
 export enum Role {
   USER = 'user',
   MODEL = 'model',

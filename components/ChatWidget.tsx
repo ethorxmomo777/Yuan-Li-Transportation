@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, User, Bot, Loader2 } from 'lucide-react';
+import { X, Send, User, Bot, MessageSquare } from 'lucide-react';
 import { ChatMessage, Role } from '../types';
 import { startChatSession, sendMessageToGemini, resetChatSession } from '../services/geminiService';
 import ReactMarkdown from 'react-markdown';
@@ -27,7 +27,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
       const initialMessage: ChatMessage = {
         id: 'init-1',
         role: Role.MODEL,
-        text: "嗨！我是小源 😊 您的台灣陸運好幫手！請問今天需要從哪裡運送貨物呢？",
+        text: "您好！我是小源 😊 讓我幫您快速取得運輸報價！請問貨物要從哪裡出發呢？",
         timestamp: Date.now(),
       };
       setMessages([initialMessage]);
@@ -92,18 +92,18 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center sm:items-end sm:justify-end sm:p-6 bg-black/50 sm:bg-transparent transition-opacity duration-300">
-      <div className="bg-white w-full h-full sm:w-[400px] sm:h-[600px] sm:rounded-2xl shadow-2xl flex flex-col border border-slate-200 overflow-hidden animate-fade-in-up">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center sm:items-end sm:justify-end sm:p-6 bg-black/50 sm:bg-transparent transition-opacity duration-300">
+      <div className="bg-white w-full h-full sm:w-[400px] sm:h-[600px] sm:rounded-2xl shadow-2xl flex flex-col border border-slate-200 overflow-hidden animate-fade-in-up font-sans">
         
         {/* Header */}
-        <div className="bg-[#87CEEB] p-4 flex items-center justify-between text-white shadow-sm">
+        <div className="bg-brand p-4 flex items-center justify-between text-white shadow-sm">
           <div className="flex items-center gap-3">
             <div className="bg-white/20 p-2 rounded-full">
               <Bot className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-lg leading-tight">源利運輸客服</h3>
-              <p className="text-xs text-blue-50 opacity-90">AI 助理 小源 (線上)</p>
+              <h3 className="font-bold text-lg leading-tight">AI 智慧詢價</h3>
+              <p className="text-xs text-blue-50 opacity-90">客服小源 (線上)</p>
             </div>
           </div>
           <button 
@@ -124,12 +124,12 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
               <div className={`flex max-w-[85%] gap-2 ${msg.role === Role.USER ? 'flex-row-reverse' : 'flex-row'}`}>
                 {/* Avatar */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  msg.role === Role.USER ? 'bg-indigo-100' : 'bg-sky-100'
+                  msg.role === Role.USER ? 'bg-indigo-100' : 'bg-blue-100'
                 }`}>
                   {msg.role === Role.USER ? (
                     <User className="w-5 h-5 text-indigo-500" />
                   ) : (
-                    <Bot className="w-5 h-5 text-sky-500" />
+                    <Bot className="w-5 h-5 text-brand" />
                   )}
                 </div>
 
@@ -144,7 +144,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
                       ul: ({node, ...props}) => <ul className="list-disc pl-4 mt-2 mb-2" {...props} />,
                       li: ({node, ...props}) => <li className="mb-1" {...props} />,
                       p: ({node, ...props}) => <p className="mb-1 last:mb-0" {...props} />,
-                      strong: ({node, ...props}) => <strong className="font-bold text-sky-600" {...props} />
+                      strong: ({node, ...props}) => <strong className="font-bold text-brand-dark" {...props} />
                     }}
                    >
                      {msg.text}
@@ -158,13 +158,13 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
           {isLoading && (
             <div className="flex justify-start w-full">
               <div className="flex gap-2 max-w-[85%]">
-                <div className="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-5 h-5 text-sky-500" />
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-5 h-5 text-brand" />
                 </div>
                 <div className="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm flex items-center gap-1">
-                  <div className="w-2 h-2 bg-sky-400 rounded-full typing-dot"></div>
-                  <div className="w-2 h-2 bg-sky-400 rounded-full typing-dot"></div>
-                  <div className="w-2 h-2 bg-sky-400 rounded-full typing-dot"></div>
+                  <div className="w-2 h-2 bg-brand rounded-full typing-dot"></div>
+                  <div className="w-2 h-2 bg-brand rounded-full typing-dot"></div>
+                  <div className="w-2 h-2 bg-brand rounded-full typing-dot"></div>
                 </div>
               </div>
             </div>
@@ -182,19 +182,19 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose }) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="輸入訊息..."
-              className="flex-1 bg-slate-100 border-none rounded-full px-4 py-3 text-sm focus:ring-2 focus:ring-sky-300 focus:outline-none transition-all placeholder:text-slate-400"
+              className="flex-1 bg-slate-100 border-none rounded-full px-4 py-3 text-sm focus:ring-2 focus:ring-brand/30 focus:outline-none transition-all placeholder:text-slate-400"
               disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}
               disabled={!input.trim() || isLoading}
-              className="p-3 bg-[#87CEEB] text-white rounded-full hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md active:scale-95"
+              className="p-3 bg-brand text-white rounded-full hover:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-md active:scale-95"
             >
               <Send className="w-5 h-5" />
             </button>
           </div>
           <div className="text-center mt-2">
-             <p className="text-[10px] text-slate-400">AI 智慧客服可能會產生錯誤訊息，請以正式報價單為準。</p>
+             <p className="text-[10px] text-slate-400">AI 客服可能產生錯誤，請以正式報價單為準。</p>
           </div>
         </div>
       </div>

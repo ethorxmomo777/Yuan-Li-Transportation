@@ -1,63 +1,76 @@
 import React from 'react';
-import { Truck, Box, Warehouse, ArrowRight, Map } from 'lucide-react';
-import { ServiceItem } from '../types';
+import { Truck, Package, Anchor, AlertTriangle, ArrowRight } from 'lucide-react';
 
-const services: ServiceItem[] = [
+const services = [
   {
-    id: 'charter',
-    title: '專車配送服務',
-    description: '提供 1.75噸 至 35噸 各式貨車專車直送，包含鷗翼車、平板車與溫控車，全台點對點快速直達。',
-    icon: <Truck className="w-8 h-8 text-white" />,
+    id: 'domestic',
+    title: '國內陸運',
+    desc: '全台灣陸路運輸服務，高雄據點出發服務全台。彈性調度、即時回應，並提供 GPS 追蹤。',
+    icon: <Truck className="w-8 h-8" />,
+    color: 'bg-blue-50 text-blue-600',
   },
   {
-    id: 'ltl',
-    title: '回頭車與併車',
-    description: '針對小量貨物提供經濟實惠的併車方案，以及每日南北往返的回頭車資源，有效降低運輸成本。',
-    icon: <Box className="w-8 h-8 text-white" />,
+    id: 'delivery',
+    title: '配送服務',
+    desc: '最後一哩路配送，準時送達並提供簽收回條。適合電商、零售業，可指定時段配送。',
+    icon: <Package className="w-8 h-8" />,
+    color: 'bg-green-50 text-green-600',
   },
   {
-    id: 'warehouse',
-    title: '倉儲物流中心',
-    description: '位於交通樞紐的現代化物流中心，提供長短期貨物暫存、理貨加工、庫存管理及最後一哩配送服務。',
-    icon: <Warehouse className="w-8 h-8 text-white" />,
+    id: 'port',
+    title: '進出口碼頭配送',
+    desc: '專精高雄港進出口貨物配送、機場報關及貨物運送，提供專業報關協助與完整物流鏈。',
+    icon: <Anchor className="w-8 h-8" />,
+    color: 'bg-cyan-50 text-cyan-600',
+  },
+  {
+    id: 'special',
+    title: '特殊貨物運送',
+    desc: '精密儀器（氣墊車）、大型設備（歐翼車）運送。提供客製化運輸方案與全程保險保障。',
+    icon: <AlertTriangle className="w-8 h-8" />,
+    color: 'bg-orange-50 text-orange-600',
   },
 ];
 
 const Services: React.FC = () => {
   return (
-    <section className="py-24 bg-white">
+    <div className="py-24 bg-white fade-in">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">全方位陸運解決方案</h2>
-          <p className="text-slate-500 max-w-2xl mx-auto">
-            無論是大型機台、棧板貨物還是急件配送，我們都有合適的車輛為您服務
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">專業物流服務 一站式解決方案</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto">
+            我們提供從倉儲、運輸到配送的完整解決方案，讓您無後顧之憂
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
             <div 
               key={service.id} 
-              className="group p-8 rounded-2xl bg-slate-50 hover:bg-white border border-slate-100 hover:border-[#87CEEB]/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+              className="group p-8 rounded-2xl bg-white border border-slate-100 hover:border-brand/30 hover:shadow-xl transition-all duration-300 flex flex-col items-start"
             >
-              <div className="w-16 h-16 bg-[#87CEEB] rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-sky-200 group-hover:scale-110 transition-transform duration-300">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${service.color}`}>
                 {service.icon}
               </div>
               <h3 className="text-xl font-bold text-slate-800 mb-3">{service.title}</h3>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                {service.description}
+              <p className="text-slate-600 leading-relaxed mb-6 text-sm flex-grow">
+                {service.desc}
               </p>
-              <a href="#" className="inline-flex items-center text-[#87CEEB] font-semibold group-hover:gap-2 transition-all">
-                了解更多 <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
-              
-              {/* Decorative Gradient */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden mt-auto">
+                <div className="w-0 h-full bg-brand group-hover:w-full transition-all duration-500 ease-out"></div>
+              </div>
             </div>
           ))}
         </div>
+
+        <div className="mt-16 p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-sm text-slate-500">
+          <p className="flex items-center justify-center gap-2">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            所有服務皆提供 GPS 即時追蹤、24小時客服支援
+          </p>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
